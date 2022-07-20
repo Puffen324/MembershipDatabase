@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.Optional;
+
 @EnableJpaRepositories("com.andresoderlund.membership.repository")
 @SpringBootApplication
 public class MembershipApplication {
@@ -21,7 +23,7 @@ public class MembershipApplication {
         return args -> {
             Member member = new Member();
             member.setFirstName("André");
-            dbService.saveMember(member);
+            dbService.saveMember(Optional.of(member));
 
         };
     }
