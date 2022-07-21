@@ -3,7 +3,13 @@ package com.andresoderlund.membership.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 
 @Entity
 @Getter
@@ -14,17 +20,17 @@ public class Member {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "Förnamn")
+    @Column(name = "Firstname")
     private String firstName;
-    @Column(name = "Efternamn")
+    @Column(name = "Lastname")
     private String lastName;
-    @Column(name = "Födelsedatum")
+    @Column(name = "Birthdate")
     private String birthDate;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private AgeRange ageRange;
-    @Column(name = "Tävlingslicens")
+    @Column(name = "License")
     private boolean license;
-    @Column(name = "Aktiv")
+    @Column(name = "Active")
     private boolean active;
 
     public Member() {
