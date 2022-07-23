@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 
 @Entity
 @Getter
@@ -17,7 +17,7 @@ import javax.persistence.Id;
 public class Member {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "Firstname")
@@ -26,12 +26,17 @@ public class Member {
     private String lastName;
     @Column(name = "Birthdate")
     private String birthDate;
-    @Enumerated(EnumType.STRING)
-    private AgeRange ageRange;
+    @Column(name = "Phonenumber")
+    private String phone;
+    @Column(name = "Email")
+    private String email;
     @Column(name = "License")
     private boolean license;
     @Column(name = "Active")
     private boolean active;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Class")
+    private AgeRange ageRange;
 
     public Member() {
 

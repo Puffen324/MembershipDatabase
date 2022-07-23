@@ -10,14 +10,13 @@ import lombok.Setter;
 public class MemberDto {
 
     private Integer id;
-
     private String firstName;
-
     private String lastName;
+    private String phone;
+    private String email;
 
     private AgeRange ageRange;
 
     private boolean license;
-
     private boolean active;
 }

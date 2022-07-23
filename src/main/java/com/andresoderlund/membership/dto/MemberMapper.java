@@ -15,6 +15,8 @@ public class MemberMapper {
         memberDto.setId(member.getId());
         memberDto.setFirstName(member.getFirstName());
         memberDto.setLastName(member.getLastName());
+        memberDto.setEmail(member.getEmail());
+        memberDto.setPhone(member.getPhone());
         memberDto.setAgeRange(member.getAgeRange());
         memberDto.setActive(member.isActive());
         memberDto.setLicense(member.isLicense());
@@ -39,6 +41,8 @@ public class MemberMapper {
         member.setFirstName(memberDto.getFirstName());
         member.setLastName(memberDto.getLastName());
         member.setAgeRange(memberDto.getAgeRange());
+        member.setEmail(memberDto.getEmail());
+        member.setPhone(memberDto.getPhone());
         member.setActive(memberDto.isActive());
         member.setLicense(memberDto.isLicense());
 
