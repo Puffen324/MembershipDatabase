@@ -19,11 +19,11 @@ public class MembershipApplication {
     @Bean
     public CommandLineRunner init(MemberService memberService) {
         return args -> {
-            for (int i = 0; i <= 250; i++) {
+            for (int i = 0; i <= 5; i++) {
                 Member member = new Member();
-                member.setId(i);
-                member.setFirstName("André".concat(String.valueOf(i)));
-                member.setLastName("Söderlund".concat(String.valueOf(i)));
+
+                member.setFirstName("Andre");
+                member.setLastName("Soderlund");
                 if (i % 2 == 0) {
                     member.setAgeRange(AgeRange.ADULT);
                 } else {
@@ -32,6 +32,8 @@ public class MembershipApplication {
                 member.setActive(true);
                 member.setLicense(true);
                 member.setBirthDate("950206-9454".concat(String.valueOf(i)));
+                member.setPhone("076-3241118");
+                member.setEmail("andre.soderlund@live.com");
                 memberService.saveMember(member);
             }
 

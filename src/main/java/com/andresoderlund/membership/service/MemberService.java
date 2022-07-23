@@ -2,15 +2,25 @@ package com.andresoderlund.membership.service;
 
 import com.andresoderlund.membership.dto.MemberDto;
 import com.andresoderlund.membership.dto.MemberMapper;
+import com.andresoderlund.membership.exception.MemberNotFoundException;
 import com.andresoderlund.membership.model.Member;
 import com.andresoderlund.membership.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public record MemberService(MemberRepository memberRepository) {
+public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    @Autowired
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
 
     //Vill inte exponera personnummer mot användare, därav DTO objekt som inte har personnummer.
     //Direkt när vi hämtar alla medlemmar så gör vi om dem till DTO objekt.
@@ -18,21 +28,26 @@ public record MemberService(MemberRepository memberRepository) {
         return MemberMapper.listToDto(memberRepository.findAll());
     }
 
-
-    public Optional<MemberDto> findMemberById(Integer id) {
-        return memberRepository.findById(id).map(MemberMapper::toDto);
+    public MemberDto findMemberById(Integer id) {
+        return memberRepository.findById(id).map(MemberMapper::toDto)
+                .orElseThrow(() -> new MemberNotFoundException("Member with id " + id + " not found!"));
     }
 
-    public Optional<Member> saveMember(Optional<MemberDto> member) {
-        return member.map(e -> memberRepository.save(MemberMapper.toEntity(member.get())));
+    public MemberDto saveMember(MemberDto member) {
+        memberRepository.save(MemberMapper.toEntity(member));
+        return memberRepository.findById(member.getId()).map(MemberMapper::toDto)
+                .orElseThrow(() -> new MemberNotFoundException("Member with id " + member.getId() + " not found!"));
     }
 
-    //För nuvarande mockdata lösning krävs en savemetod som tar en entitet. I övrigt DTOer överallt.
-    public void saveMember(Member member) {
-        memberRepository.save(member);
+    public Member saveMember(Member member) {
+        return memberRepository.save(member);
     }
 
     public void deleteMember(Optional<MemberDto> member) {
         member.ifPresent(e -> memberRepository.delete(MemberMapper.toEntity(member.get())));
+    }
+
+    public void deleteMemberById(Integer id) {
+        memberRepository.deleteMemberById(id);
     }
 }
